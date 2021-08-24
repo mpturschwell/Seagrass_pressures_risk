@@ -6,6 +6,7 @@ library(brms)
 library(patchwork)
 library(ggplot2)
 library(ggthemes)
+library(bayestestR)
 mytime <- format(Sys.time(), "%Y-%m-%d")
 
 # ----------------------------------------------------------------------------------------------------
