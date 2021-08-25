@@ -11,7 +11,8 @@
 
 # Folders
 ############
-**/[dD]ata/**
+#**/[dD]ata/**
+**/[dD]ata copy/**
 **/[oO][lL][dD]/**
 **/[pP]rivate/**
 **/[sS]hared/**

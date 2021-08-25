@@ -325,6 +325,8 @@ save(dist_mod_5k_int ,
      dat, dat2000,
      file = "Data/All_model_combinations.rda")
 
+# only save best model
+save(dist_mod_100k_noSLR_DH,file = "Data/brms_model.rda")
 ###################################################################################################################################
 load(file = "Data/All_model_combinations.rda")
 
@@ -350,7 +352,8 @@ print(loo_compare(
           dist_mod_200k),
       criterion = "loo")
 
-# Look at summary of best model 
+# Load and look at summary of best model
+load(file = "Data/brms_model.rda")
 mod_summary <- summary(dist_mod_100k_noSLR_DH)
 
 # Check model residuals

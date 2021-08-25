@@ -409,8 +409,9 @@ tmap_save(ALL, filename = paste0("Figures/", mytime, "_Figure_S2.png"), width = 
 #--------------------------------------------------------------------------------#
 rm(list=ls())
 mytime <- format(Sys.time(), "%Y-%m-%d")
-load(file = "Data/All_models-onlyGAMdat.rda")
-
+#load(file = "Data copy/All_models-onlyGAMdat.rda")
+save(dist_mod_100k_noSLR_DH,file = "Data/brms_model_GAMdata.rda")
+load(file = "Data/brms_model_GAMdata.rda")
 probs <- p_direction(
   dist_mod_100k_noSLR_DH,
   effects = c("all"),
