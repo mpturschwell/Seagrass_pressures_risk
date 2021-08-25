@@ -20,10 +20,10 @@ dat2000 <- read.csv("Data/Data_seagrass_trends_pressures_2000-2010.csv")
 
 # create different breaks to apply to models
 categories <- list(c(-Inf, -0.025, -0.005, 0.005, 0.025, Inf),
-              c(-Inf, -0.05, -0.005, 0.005, 0.05, Inf),
-              c(-Inf, -0.025, -0.01, 0.01, 0.025, Inf),
-              c(-Inf, -0.05, -0.01, 0.01, 0.05, Inf),
-              c(-Inf, -0.1, -0.02, 0.02, 0.1, Inf))
+                   c(-Inf, -0.05, -0.005, 0.005, 0.05, Inf),
+                   c(-Inf, -0.025, -0.01, 0.01, 0.025, Inf),
+                   c(-Inf, -0.05, -0.01, 0.01, 0.05, Inf),
+                   c(-Inf, -0.1, -0.02, 0.02, 0.1, Inf))
 
 model_list <- vector(mode = "list", length = length(categories))    
 
@@ -98,7 +98,6 @@ for(i in 1:5){
     geom_text(aes(x = 4, label = Probability))+
     geom_vline(aes(xintercept=0), linetype = 'dotted')
   
-  
   g2 <- plotme[9:11,] %>%
     arrange(desc(m)) %>%    # First sort by val. This sort the dataframe but NOT the factor levels
     mutate(parameter=factor(parameter, levels=parameter)) %>%   # This trick update the factor levels
@@ -123,3 +122,4 @@ for(i in 1:5){
   ggsave(plot = plotlist[[i]], file = paste("Figures/", "model",paste0(categories[[i]], collapse = " "),".png"))
 }
 
+# we then used Adobe to customise plots 

@@ -1,7 +1,10 @@
 # ---------------------------------------------------------------------------------------------------------------------------
-# February 2021
+# Anthropogenic pressures and life-history predict trajectories of seagrass meadow extent at a global scale
+# June 2021
 # Ordinal seagrass trajectories model combinations and plots
-# MP Turschwell: https://github.com/mpturschwell
+# Bayesian ordinal regression models with unequal variance - ONLY 2000-2010 
+# Author: MP Turschwell
+# https://github.com/mpturschwell
 # ---------------------------------------------------------------------------------------------------------------------------
 
 library(tidyverse)
@@ -17,28 +20,25 @@ library(tidybayes)
 
 mytime <- format(Sys.time(), "%Y_%m_%d")
 
-# ---------------------------------------------------------------------------------------------------------------------------
-# Bayesian ordinal regression models with unequal variance - ONLY 2000-2010  
-# ---------------------------------------------------------------------------------------------------------------------------
+# import data
 dat2000 <- read_csv("Data/Data_seagrass_trends_pressures_2000-2010.csv", col_types = cols())
 
-# --------------------------------------------------------------------------------------------------------------------------
 # Fit null model first 
-# --------------------------------------------------------------------------------------------------------------------------
 m1_null_no_RE <- brm(category ~ 1, 
                prior = c(prior(normal(0, 4), class = Intercept)),  # weakly informative 
                iter = 4000, warmup = 1000, cores = 2, chains = 4, thin = 1,
                data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
-
+# Fit null model with bioregion random effect 
 m1_null <- brm(category ~ 1 + (1|bioregion), 
                prior = c(prior(normal(0, 4), class = Intercept),  # weakly informative 
                prior(cauchy(0, 2), class = sd)),         # weakly informative
                iter = 4000, warmup = 1000, cores = 2, chains = 4, thin = 1,
                data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
+
 # --------------------------------------------------------------------------------------------------
-#         DISTRIBUTIONAL MODEL to explain variance by lh category 
+# Fit distributional model that also models variance by lh category 
 # --------------------------------------------------------------------------------------------------
 
 # 5km buffer
@@ -54,6 +54,7 @@ dist_mod_5k <- brm(
   iter = 4000, warmup = 1000, cores = 2, chains = 4, thin = 1,
   data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
+# 5km buffer with interaction between LH and predictors 
 dist_mod_5k_int <- brm(
   formula = bf(category ~ (mean_Dd_5k +mean_Dh_5k + mean_Np_5k +  mean_Oa_5k +  
                              mean_Ocp_5k + mean_Ship_5k + mean_Slr_5k +  mean_Sst_5k +   
@@ -79,6 +80,7 @@ dist_mod_10k <- brm(
   iter = 4000, warmup = 1000, cores = 2, chains = 4, thin = 1,
   data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
+# 10km buffer with interaction between LH and predictors 
 dist_mod_10k_int <- brm(
   formula = bf(category ~ (mean_Dd_10k +mean_Dh_10k + mean_Np_10k +  mean_Oa_10k +  
                              mean_Ocp_10k + mean_Ship_10k + mean_Slr_10k +  mean_Sst_10k +   
@@ -104,6 +106,7 @@ dist_mod_20k <- brm(
   iter = 4000, warmup = 1000, cores = 2, chains = 4, thin = 1,
   data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
+#20km buffer with interaction between LH and predictors 
 dist_mod_20k_int <- brm(
   formula = bf(category ~ (mean_Dd_20k +mean_Dh_20k + mean_Np_20k +  mean_Oa_20k +  
                              mean_Ocp_20k + mean_Ship_20k + mean_Slr_20k +  mean_Sst_20k +   
@@ -129,6 +132,7 @@ dist_mod_30k <- brm(
   iter = 4000, warmup = 1000, cores = 2, chains = 4, thin = 1,
   data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
+#30km buffer with interaction between LH and predictors 
 dist_mod_30k_int <- brm(
   formula = bf(category ~ (mean_Dd_30k +mean_Dh_30k + mean_Np_30k +  mean_Oa_30k +  
                              mean_Ocp_30k + mean_Ship_30k + mean_Slr_30k +  mean_Sst_30k +   
@@ -154,6 +158,7 @@ dist_mod_50k <- brm(
   iter = 4000, warmup = 1000, cores = 2, chains = 4, thin = 1,
   data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
+#50km buffer with interaction between LH and predictors 
 dist_mod_50k_int <- brm(
   formula = bf(category ~ (mean_Dd_50k +mean_Dh_50k + mean_Np_50k +  mean_Oa_50k +  
                              mean_Ocp_50k + mean_Ship_50k + mean_Slr_50k +  mean_Sst_50k +   
@@ -180,6 +185,7 @@ dist_mod_100k <- brm(
   iter = 4000, warmup = 1000, cores = 2, chains = 4, thin = 1,
   data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
+#100km buffer with interaction between LH and predictors 
 dist_mod_100k_int <- brm(
   formula = bf(category ~ (mean_Dd_100k +mean_Dh_100k + mean_Np_100k +  mean_Oa_100k +  
                              mean_Ocp_100k + mean_Ship_100k + mean_Slr_100k +  mean_Sst_100k +   
@@ -205,6 +211,7 @@ dist_mod_200k <- brm(
   iter = 4000, warmup = 1000, cores = 2, chains = 4, thin = 1,
   data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
+#200km buffer with interaction between LH and predictors 
 dist_mod_200k_int <- brm(
   formula = bf(category ~ (mean_Dd_200k +mean_Dh_200k + mean_Np_200k +  mean_Oa_200k +  
                              mean_Ocp_200k + mean_Ship_200k + mean_Slr_200k +  mean_Sst_200k +   
@@ -218,7 +225,8 @@ dist_mod_200k_int <- brm(
   data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
 
-# REMOVING COLLINEAR VARS
+# based on best above model, remove collinear predictors bases on Grech et al. 2012 vulnerability 
+# removing Sea Level Rise 
 dist_mod_100k_noSLR <- brm(
   formula = bf(category ~ mean_Dd_100k + mean_Dh_100k + mean_Np_100k +  mean_Oa_100k + mean_Ocp_100k+  
                  mean_Ship_100k +  mean_Sst_100k +    
@@ -231,6 +239,7 @@ dist_mod_100k_noSLR <- brm(
   iter = 4000, warmup = 1000, cores = 2, chains = 4, thin = 1,
   data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
+# removing Sea Level Rise but including interaction between LH and predictorss
 dist_mod_100k_noSLR_int <- brm(
   formula = bf(category ~ (mean_Dd_100k + mean_Dh_100k + mean_Np_100k +  mean_Oa_100k + mean_Ocp_100k+  
                              mean_Ship_100k +  mean_Sst_100k +    
@@ -243,6 +252,7 @@ dist_mod_100k_noSLR_int <- brm(
   iter = 4000, warmup = 1000, cores = 2, chains = 4, thin = 1,
   data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
+# removing Sea Level Rise & Population Density 
 dist_mod_100k_noSLR_DH <- brm(
   formula = bf(category ~ mean_Dd_100k + mean_Np_100k +  mean_Oa_100k + mean_Ocp_100k+  
                  mean_Ship_100k +  mean_Sst_100k +    
@@ -255,7 +265,7 @@ dist_mod_100k_noSLR_DH <- brm(
   iter = 4000, warmup = 1000, cores = 2, chains = 4, thin = 1,
   data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
-
+# removing Sea Level Rise & Population Density including interaction between LH and predictorss 
 dist_mod_100k_noSLR_DH_int <- brm(
   formula = bf(category ~ (mean_Dd_100k + mean_Np_100k +  mean_Oa_100k + mean_Ocp_100k+  
                              mean_Ship_100k +  mean_Sst_100k +    
@@ -269,6 +279,7 @@ dist_mod_100k_noSLR_DH_int <- brm(
   data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
 
+# add model criterion for comparison 
 m1_null          <- add_criterion(m1_null,  c("loo", "waic"))
 m1_null_no_RE    <- add_criterion(m1_null_no_RE,      c("loo", "waic"))
 dist_mod_5k_int  <- add_criterion(dist_mod_5k_int,  c("loo", "waic"))
@@ -290,7 +301,7 @@ dist_mod_100k_noSLR_DH    <- add_criterion(dist_mod_100k_noSLR_DH,     c("loo", 
 dist_mod_100k_noSLR_int    <- add_criterion(dist_mod_100k_noSLR_int,     c("loo", "waic"))
 dist_mod_100k_noSLR_DH_int    <- add_criterion(dist_mod_100k_noSLR_DH_int,     c("loo", "waic"))
 
-
+# Save all models 
 save(dist_mod_5k_int ,
      dist_mod_5k     ,
      dist_mod_10k_int,
@@ -315,7 +326,6 @@ save(dist_mod_5k_int ,
      file = "Data/All_model_combinations.rda")
 
 ###################################################################################################################################
-
 load(file = "Data/All_model_combinations.rda")
 
 # Compare model information criterion
@@ -343,9 +353,7 @@ print(loo_compare(
 # Look at summary of best model 
 mod_summary <- summary(dist_mod_100k_noSLR_DH)
 
-#------------------------------------------------------------------------------------------------
 # Check model residuals
-# ----------------------------------------------------------------------------------------------------
 resid <- dat2000 %>%
   dplyr::select(-geom) %>% 
   add_predicted_draws(dist_mod_100k_noSLR_DH) %>%
@@ -363,7 +371,7 @@ resid
 
 residuals <- resid$data
 
-# by LH category 
+# residuals by LH category 
 ggplot(residuals, aes(x = z_residual))+
   geom_density()+
   facet_wrap(~lh)

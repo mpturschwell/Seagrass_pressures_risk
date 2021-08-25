@@ -1,48 +1,18 @@
-# Project title
+# About
+## Repository for paper: Anthropogenic pressures and life-history predict trajectories of seagrass meadow extent at a global scale
+This repository hosts the R scripts and data to run Bayesian ordinal regression models in brms, create figures, and run risk predictions. Please email m.turschwell@griffith.edu.au for any questions 
 
-Author names here ...
+### Anthropogenic pressures and life-history predict trajectories of seagrass meadow extent at a global scale
+Mischa P. Turschwell,1* Rod M. Connolly,2 Jillian C. Dunic,3 Michael Sievers,2 Christina A. Buelow,2 Ryan M. Pearson,2 Vivitskaia J. D. Tulloch,4 Isabelle M. Côté,3 Richard K. F. Unsworth,5 Catherine J. Collier,6 & Christopher J. Brown1 
 
-
-## The Motivation
-
-Give a brief summary on the project aims ...
-
-
-## TODO List
-
-* Something you have to do
-* Another thing you have to do
-...
-
-## Ideas
-
-* Idea 1
-* Idea 2
-...
+1 Coastal and Marine Research Centre, Australian Rivers Institute, Griffith University, Nathan, Queensland 4111, Australia. 
+2 Coastal and Marine Research Centre, Australian Rivers Institute, School of Environment and Science, Griffith University, Gold Coast, Queensland 4222, Australia.
+3 Department of Biological Sciences, Simon Fraser University, Burnaby, BC V5A 1S6 Canada.
+4 Department of Forest and Conservation Science, University of British Columbia, Vancouver BC V6T 1Z4 Canada.
+5 Seagrass Ecosystem Research Group, College of Science, Swansea University, Swansea SA2 8PP, UK.
+6 Centre for Tropical Water & Aquatic Ecosystem Research (TropWATER), James Cook University, Cairns, Queensland 4870, Australia.
+* Corresponding author
+Email m.turschwell@griffith.edu.au
 
 
-## Other Important Details
 
-#### Confidentiality of project and data
-
-Specify the confidentiality of the project and the data here ...
-
-### Important section 1
-
-Include details of section one. Where section 1 might be one of the following: Experimental methods, Statistical analyses, Data manipulation, Conceptualization, Caveats, Errors etc. Some of these sections could be copied directly into a manuscript.
-
-### Important section 2
-
-Include details of section 2 ...
-
-### Important section 3
-
-Include details of section 3 ...
-
-###
-...
-###
-
-### Important section N
-
-Include details of section N ...

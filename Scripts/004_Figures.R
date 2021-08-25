@@ -27,7 +27,7 @@ world_clip <- tm_shape(World.mercator, bbox =World_clip_bb) +
   tm_dots(
     col = "IRtrend_X50.",
     size = 0.3,
-    shape = 1, border.lwd = 2.5,     # open circles 
+    shape = 1, border.lwd = 2.5,     
     title = "Trend for 2000's",
     legend.show = TRUE,
     midpoint = NA,
@@ -45,7 +45,7 @@ tmap_save(world_clip, filename = paste0("Figures/", mytime, "_Figure_1-A.png"), 
 
 # Figure 1B - inset of North America
 nth_am <- st_bbox(c(xmin= -8601620, ymin = 3000048, xmax= -5601620, ymax = 5551339))
-Fig1B <- tm_shape(World, bbox = nth_am) + #tmaptools::bb(matrix(c(0,1000000,2000000,2000000),2,2))) +
+Fig1B <- tm_shape(World, bbox = nth_am) + 
   tm_polygons() +
   tm_shape(sg_dat) + 
   tm_dots(
@@ -210,7 +210,7 @@ fig3b <- fig3b_dd$`mean_Dd_100k:cats__`+
         axis.title.y = element_text(color = "grey20", size = 16))
 fig3b
 
-#Life history plot
+#Life history panel
 fig3c_LH <- conditional_effects(dist_mod_100k_noSLR_DH, effects = "lh", categorical = TRUE, prob = c(0.75)) %>%  
   plot(theme = theme(panel.grid = element_blank()))
 
@@ -293,34 +293,33 @@ ggsave(filename = paste0("Figures/", mytime, "_Figure_S1_Bioregion_proportion_tr
        prop2000, width = 10, height = 8, units = c("in"), dpi = 300)
 
 # -----------------------------------------------------------------------------
-# FIGURE S2 - insets of pressure maps
+# FIGURE S2 - Insets of pressure maps
 # -----------------------------------------------------------------------------
+# import demersal destructive fishing raster 
 dd_rast_ag <- raster("Data/Dd_100km.tif")
 dd_rast_ag[dd_rast_ag<=0] <- NA
 plot(dd_rast_ag)
 crs(dd_rast_ag) <- "+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
 
+# import turbidity cv raster 
 turb_cv_ag <- raster("Data/Turb_CV_100km.tif")
 turb_cv_ag[turb_cv_ag<=0] <- NA 
 plot(turb_cv_ag)
 crs(turb_cv_ag) <- "+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
 
-#raster to match 
-tmap_mode("plot") # 'view' is leaflet integrative viewer
 data("World")
 World <- st_transform(World, crs = "+proj=moll +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs") 
 
 # clip world to limit poles 
 World_clip_bb <- st_bbox(c(xmin= -13801620, ymin = -6520048, xmax= 18601620, ymax = 8751339))
 
-# RASTER MAPS 
+# Create raster maps for both pressures
 europe <- st_bbox(c(xmin= -1501620, ymin = 3800048, xmax= 2501620, ymax = 8551339))
 tm_shape(World, bbox =europe) +
   tm_polygons()
 
 med_threat <-  tm_shape(dd_rast_ag,bbox =europe) + 
   tm_raster(palette = "YlOrRd", n = 4, contrast = c(0.4,1),
-            #         breaks=c(0, 0.2, 0.6, Inf),
             labels = c("Low", "Medium", "High", "Very High"),
             legend.reverse = TRUE,
             title = "Destructive demersal\n fishing pressure")+
@@ -338,10 +337,8 @@ med_threat <-  tm_shape(dd_rast_ag,bbox =europe) +
   tm_credits("(A)", size = 2, position = c(0.05, 0.80))
 med_threat
 
-
 med_turb <-  tm_shape(turb_cv_ag,bbox =europe) + 
   tm_raster(palette = "YlOrRd", n = 4, contrast = c(0.4,1),
-            #         breaks=c(0, 0.2, 0.6, Inf),
             labels = c("Low", "Medium", "High", "Very High", "Extreme"),
             legend.reverse = TRUE,
             title = "Turbidity variability")+
@@ -407,9 +404,9 @@ usa_turb
 ALL <- tmap_arrange(med_threat, med_turb, usa_threat, usa_turb, nrow = 2, ncol = 2)
 tmap_save(ALL, filename = paste0("Figures/", mytime, "_Figure_S2.png"), width = 8, height = 8, dpi = 400)
 
-#--------------------------------------------------------#
-# FIGURE S3 - parameters with only GAM data (>2 obs)
-#--------------------------------------------------------#
+#--------------------------------------------------------------------------------#
+# FIGURE S3 - sensitivity figure checking parameters with only GAM data (>2 obs)
+#--------------------------------------------------------------------------------#
 rm(list=ls())
 mytime <- format(Sys.time(), "%Y-%m-%d")
 load(file = "Data/All_models-onlyGAMdat.rda")
