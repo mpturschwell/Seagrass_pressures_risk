@@ -1,7 +1,8 @@
-#About
+# About
 This repository hosts the R scripts and data to run Bayesian ordinal regression models in brms, create figures, sensitivity analysis and run risk predictions. Please email m.turschwell@griffith.edu.au for any questions.
 
 ### Anthropogenic pressures and life-history predict trajectories of seagrass meadow extent at a global scale
+doi: 
 Mischa P. Turschwell,1* Rod M. Connolly,2 Jillian C. Dunic,3 Michael Sievers,2 Christina A. Buelow,2 Ryan M. Pearson,2 Vivitskaia J. D. Tulloch,4 Isabelle M. Côté,3 Richard K. F. Unsworth,5 Catherine J. Collier,6 & Christopher J. Brown1 
 
 1 Coastal and Marine Research Centre, Australian Rivers Institute, Griffith University, Nathan, Queensland 4111, Australia. 
