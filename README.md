@@ -1,7 +1,8 @@
 # About
 This repository hosts the R scripts to run Bayesian ordinal regression models in brms, create figures, sensitivity analysis and run risk predictions. Please email m.turschwell@griffith.edu.au for any questions.
 
-All pressure data is freely available at https://knb.ecoinformatics.org/view/doi:10.5063/F12B8WBS
+All pressure data is freely available at https://knb.ecoinformatics.org/view/doi:10.5063/F12B8WBS.
+
 Turbidity data is freely available at https://oceandata.sci.gsfc.nasa.gov/MODIS-Aqua/Mapped/Monthly/4km/Kd_490/ 
 
 ### Anthropogenic pressures and life-history predict trajectories of seagrass meadow extent at a global scale
