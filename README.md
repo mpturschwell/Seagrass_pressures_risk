@@ -1,5 +1,7 @@
 # About
-This repository hosts the R scripts and data to run Bayesian ordinal regression models in brms, create figures, sensitivity analysis and run risk predictions. Please email m.turschwell@griffith.edu.au for any questions.
+This repository hosts the R scripts to run Bayesian ordinal regression models in brms, create figures, sensitivity analysis and run risk predictions. Please email m.turschwell@griffith.edu.au for any questions.
+
+Data is stored at .....
 
 ### Anthropogenic pressures and life-history predict trajectories of seagrass meadow extent at a global scale
 doi: 
