@@ -1,6 +1,9 @@
 
 library(RColorBrewer)
 library(tidyverse)
+library(raster)
+library(sf)
+library(tmap)
 library(dplyr)
 library(brms)
 library(patchwork)
@@ -93,7 +96,7 @@ tmap_save(Fig1BC, filename = paste0("Figures/",mytime,"_Figure_1-BC.png"), width
 # FIGURE 2 
 # ----------------------------------------------------------------------------------------------------
 dat2000 <- read_csv("Data/Data_seagrass_trends_pressures_2000-2010.csv", col_types = cols())
-load(file = "Data/All_model_combinations.rda")
+load(file = "Data/brms_model.rda")
 
 # Calculate one-sided probability of an effect
 probs <- p_direction(
@@ -169,8 +172,8 @@ fig2b
 
 fig2 <- fig2a/fig2b +  plot_annotation(tag_levels = 'A')
 fig2
-ggsave(path = "Figures/", filename = paste0(mytime,"_Figure_2.png"), 
-       fig2, width = 8, height = 8, units = c("in"), dpi = 500)
+ggsave(path = "Figures/", filename = paste0(mytime,"_Figure_2.tiff"), 
+       fig2, width = 18, height = 22, units = c("cm"), dpi = 500)
 
 # ----------------------------------------------------------------------------------------------------
 # FIGURE 3
@@ -222,7 +225,7 @@ fig3c <- ggplot(plot_dat, aes(x = cats__, y = estimate__, colour = effect1__))+
   geom_errorbar(aes(ymin = lower__, ymax = upper__),
                 width = 0.1,
                 position=position_dodge(width=0.7))   +
-  scale_colour_manual(values = grey_cols, name = "Life history",labels = c("Colonising", "Opportunistic", "Mixed", "Persistent"))+
+  scale_colour_manual(values = grey_cols, name = "Life history",labels = c("Colonizing", "Opportunistic", "Mixed", "Persistent"))+
   guides(fill = FALSE)+
   scale_x_discrete(labels = c("Rapidly declining", "Slowly declining", "Stable", "Slowly increasing", "Rapidly increasing"))+
   theme(legend.text=element_text(size=20))+
@@ -240,13 +243,13 @@ fig3 <- (fig3a | fig3b) / fig3c
 fig3 <- fig3 + plot_annotation(tag_levels = 'A')
 fig3 
 
-ggsave(path = "Figures/", filename = paste0(mytime, "_Figure_3-ABC.png"), 
-       fig3, width = 10, height = 8, units = c("in"), dpi = 300)
+ggsave(path = "Figures/", filename = paste0(mytime, "_Figure_3-ABC.tiff"), 
+       fig3, width = 26, height = 22, units = c("cm"), dpi = 300)
 
 # -----------------------------------------------------------------------------------
 # FIGURE 4
 # -----------------------------------------------------------------------------------
-rprep <- raster('Data/2021-08-12_risk_predictions.tif')
+rpred <- raster('Data/2021-08-12_risk_predictions.tif')
 data("World")
 World <- st_transform(World, crs = "+proj=moll +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs") 
 World_clip_bb <- st_bbox(c(xmin= -12601620, ymin = -6520048, xmax= 17601620, ymax = 8751339))
@@ -263,8 +266,8 @@ world_clip_hotspots <- tm_shape(World, bbox = World_clip_bb) +
   tm_layout(scale = 1.1, legend.position = c(0.82, 0.75))#+
 
 world_clip_hotspots
-tmap_save(world_clip_hotspots, filename =  paste0("Figures/",mytime, "_Figure_4.png"), dpi = 400,
-          width = 10, height = 10)
+tmap_save(world_clip_hotspots, filename =  paste0("Figures/",mytime, "_Figure_4.tiff"), dpi = 400,
+          width = 23, height = 18, units = 'cm')
 
 # -----------------------------------------------------------------------------------
 #         FIGURE S1 - PROPORTIONAL BARCHART 
