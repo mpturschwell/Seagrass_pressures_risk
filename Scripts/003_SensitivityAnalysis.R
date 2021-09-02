@@ -122,4 +122,4 @@ for(i in 1:5){
   ggsave(plot = plotlist[[i]], file = paste("Figures/", "model",paste0(categories[[i]], collapse = " "),".png"))
 }
 
-# we then used Adobe to customise plots 
+# we then used Adobe to further customise and clean plots 

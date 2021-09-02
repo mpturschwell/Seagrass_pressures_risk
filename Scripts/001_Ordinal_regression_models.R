@@ -225,7 +225,7 @@ dist_mod_200k_int <- brm(
   data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
 
-# based on best above model, remove collinear predictors bases on Grech et al. 2012 vulnerability 
+# based on best above model, remove collinear predictors bases on Grech et al. 2012 vulnerability weightings
 # removing Sea Level Rise 
 dist_mod_100k_noSLR <- brm(
   formula = bf(category ~ mean_Dd_100k + mean_Dh_100k + mean_Np_100k +  mean_Oa_100k + mean_Ocp_100k+  
@@ -239,7 +239,7 @@ dist_mod_100k_noSLR <- brm(
   iter = 4000, warmup = 1000, cores = 2, chains = 4, thin = 1,
   data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
-# removing Sea Level Rise but including interaction between LH and predictorss
+# removing Sea Level Rise but including interaction between LH and predictors
 dist_mod_100k_noSLR_int <- brm(
   formula = bf(category ~ (mean_Dd_100k + mean_Dh_100k + mean_Np_100k +  mean_Oa_100k + mean_Ocp_100k+  
                              mean_Ship_100k +  mean_Sst_100k +    
@@ -265,7 +265,7 @@ dist_mod_100k_noSLR_DH <- brm(
   iter = 4000, warmup = 1000, cores = 2, chains = 4, thin = 1,
   data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
-# removing Sea Level Rise & Population Density including interaction between LH and predictorss 
+# removing Sea Level Rise & Population Density including interaction between LH and predictors 
 dist_mod_100k_noSLR_DH_int <- brm(
   formula = bf(category ~ (mean_Dd_100k + mean_Np_100k +  mean_Oa_100k + mean_Ocp_100k+  
                              mean_Ship_100k +  mean_Sst_100k +    
@@ -279,7 +279,7 @@ dist_mod_100k_noSLR_DH_int <- brm(
   data = dat2000, family = cumulative("probit"), control = list(max_treedepth = 15, adapt_delta = 0.99))
 
 
-# add model criterion for comparison 
+# add criterion for model comparison 
 m1_null          <- add_criterion(m1_null,  c("loo", "waic"))
 m1_null_no_RE    <- add_criterion(m1_null_no_RE,      c("loo", "waic"))
 dist_mod_5k_int  <- add_criterion(dist_mod_5k_int,  c("loo", "waic"))
@@ -325,9 +325,7 @@ save(dist_mod_5k_int ,
      dat, dat2000,
      file = "Data/All_model_combinations.rda")
 
-# only save best model
-save(dist_mod_100k_noSLR_DH,file = "Data/brms_model.rda")
-###################################################################################################################################
+##################################################################################################################################
 load(file = "Data/All_model_combinations.rda")
 
 # Compare model information criterion
@@ -352,6 +350,9 @@ print(loo_compare(
           dist_mod_200k),
       criterion = "loo")
 
+# only save best model
+save(dist_mod_100k_noSLR_DH,file = "Data/brms_model.rda")
+#
 # Load and look at summary of best model
 load(file = "Data/brms_model.rda")
 mod_summary <- summary(dist_mod_100k_noSLR_DH)

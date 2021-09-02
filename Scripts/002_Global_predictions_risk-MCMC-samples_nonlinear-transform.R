@@ -8,7 +8,7 @@ library(sf)
 mytime <- format(Sys.time(), "%Y-%m-%d")
 
 # load model 
-load(file = "Data/All_model_combinations.rda")
+load(file = "Data/brms_model.rda")
 
 #select best model
 m1 <- dist_mod_100k_noSLR_DH

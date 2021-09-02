@@ -110,7 +110,7 @@ probs <- p_direction(
 addtoplot <- data.frame(probs$pd[5:15])
 
 #plotting
-par_plot <- mcmc_plot(dist_mod_100k_noSLR_DH, pars = c("_100k$", "_disc_"))+#, "^lh*")+# type = "areas")+
+par_plot <- mcmc_plot(dist_mod_100k_noSLR_DH, pars = c("_100k$", "_disc_"))+
   theme_fivethirtyeight() +
   theme(axis.text.y = element_text(hjust = 0))+
   geom_vline(xintercept = 0, col = 'black', linetype = "dashed")+
@@ -136,8 +136,8 @@ levels(plotme$parameter) <- c("Destructive demersal fishing",
                               "Persistent")
 
 fig2a <- plotme[1:8,] %>%
-  arrange(desc(m)) %>%    # First sort by val. This sort the dataframe but NOT the factor levels
-  mutate(parameter=factor(parameter, levels=parameter)) %>%   # This trick update the factor levels
+  arrange(desc(m)) %>%    # First sort by val. This sorts the data frame but NOT the factor levels
+  mutate(parameter=factor(parameter, levels=parameter)) %>%   # This  updates the factor levels
   ggplot(aes(x=m, y=parameter)) +
   geom_pointrange(aes(xmin = ll, xmax = hh), color='grey27', shape=21, fatten = 2, size = 0.5) +
   geom_pointrange(aes(xmin = l, xmax = h), fill='dodgerblue1', color='grey52', shape=21, fatten = 2, size = 2) +
@@ -153,8 +153,8 @@ fig2a <- plotme[1:8,] %>%
 fig2a
 
 fig2b <- plotme[9:11,] %>%
-  arrange(desc(m)) %>%    # First sort by val. This sort the dataframe but NOT the factor levels
-  mutate(parameter=factor(parameter, levels=parameter)) %>%   # This trick update the factor levels
+  arrange(desc(m)) %>%   
+  mutate(parameter=factor(parameter, levels=parameter)) %>%   
   ggplot(aes(x=m, y=parameter)) +
   geom_pointrange(aes(xmin = ll, xmax = hh), color='grey27', shape=21, fatten = 2, size = 0.5) +
   geom_pointrange(aes(xmin = l, xmax = h), fill='blue', color='grey52', shape=21, fatten = 2, size = 2) +
@@ -259,11 +259,11 @@ tmap_mode("plot")
 world_clip_hotspots <- tm_shape(World, bbox = World_clip_bb) + 
   tm_polygons() +
   tm_shape(rpred, raster.warp = FALSE) + 
-  tm_raster(palette = "Reds", n = 4,#, contrast = c(0.4,1),
+  tm_raster(palette = "Reds", n = 4,
             breaks=c(0, 0.25, 0.50, 0.75, 1),
             legend.reverse = TRUE,
             title = "Risk of rapid decline")+
-  tm_layout(scale = 1.1, legend.position = c(0.82, 0.75))#+
+  tm_layout(scale = 1.1, legend.position = c(0.82, 0.75))
 
 world_clip_hotspots
 tmap_save(world_clip_hotspots, filename =  paste0("Figures/",mytime, "_Figure_4.tiff"), dpi = 400,
@@ -366,7 +366,6 @@ tm_shape(World, bbox =usa) +
 
 usa_threat <-  tm_shape(dd_rast_ag,bbox =usa) + 
   tm_raster(palette = "YlOrRd", n = 4, contrast = c(0.4,1),
-            #         breaks=c(0, 0.2, 0.6, Inf),
             labels = c("Low", "Medium", "High", "Very High"),
             legend.reverse = TRUE,
             title = "Destructive demersal\n fishing pressure")+
@@ -386,7 +385,6 @@ usa_threat
 
 usa_turb <-  tm_shape(turb_cv_ag,bbox =usa) + 
   tm_raster(palette = "YlOrRd", n = 4, contrast = c(0.4,1),
-            #         breaks=c(0, 0.2, 0.6, Inf),
             labels = c("Low", "Medium", "High", "Very High", "Extreme"),
             legend.reverse = TRUE,
             title = "Turbidity variability")+
@@ -412,8 +410,6 @@ tmap_save(ALL, filename = paste0("Figures/", mytime, "_Figure_S2.png"), width = 
 #--------------------------------------------------------------------------------#
 rm(list=ls())
 mytime <- format(Sys.time(), "%Y-%m-%d")
-#load(file = "Data copy/All_models-onlyGAMdat.rda")
-save(dist_mod_100k_noSLR_DH,file = "Data/brms_model_GAMdata.rda")
 load(file = "Data/brms_model_GAMdata.rda")
 probs <- p_direction(
   dist_mod_100k_noSLR_DH,
@@ -449,8 +445,8 @@ levels(plotme$parameter) <- c("Destructive demersal fishing",
                               "Mixed",
                               "Persistent")
 fS3a <- plotme[1:8,] %>%
-  arrange(desc(m)) %>%    # First sort by val. This sort the dataframe but NOT the factor levels
-  mutate(parameter=factor(parameter, levels=parameter)) %>%   # This trick update the factor levels
+  arrange(desc(m)) %>%    
+  mutate(parameter=factor(parameter, levels=parameter)) %>%   #
   ggplot(aes(x=m, y=parameter)) +
   geom_pointrange(aes(xmin = ll, xmax = hh), color='grey27', shape=21, fatten = 2, size = 0.5) +
   geom_pointrange(aes(xmin = l, xmax = h), fill='dodgerblue1', color='grey52', shape=21, fatten = 2, size = 2) +
@@ -466,8 +462,8 @@ fS3a <- plotme[1:8,] %>%
 fS3a
 
 fS3b <- plotme[9:11,] %>%
-  arrange(desc(m)) %>%    # First sort by val. This sort the dataframe but NOT the factor levels
-  mutate(parameter=factor(parameter, levels=parameter)) %>%   # This trick update the factor levels
+  arrange(desc(m)) %>%    
+  mutate(parameter=factor(parameter, levels=parameter)) %>%   
   ggplot(aes(x=m, y=parameter)) +
   geom_pointrange(aes(xmin = ll, xmax = hh), color='grey27', shape=21, fatten = 2, size = 0.5) +
   geom_pointrange(aes(xmin = l, xmax = h), fill='blue', color='grey52', shape=21, fatten = 2, size = 2) +
