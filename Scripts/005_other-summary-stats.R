@@ -8,8 +8,3 @@ freq.table <-dat2000 %>%
   count(category) %>%
   mutate(freq = n / sum(n))
 freq.table
-
-# Count extreme values > 100% change per decade
-highdata <- dat2000[ which(dat2000$IRtrend_X50. > 0.1), ]
-lowdata <- dat2000[ which(dat2000$IRtrend_X50. < -0.1), ]
-
