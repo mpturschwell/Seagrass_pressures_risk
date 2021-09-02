@@ -12,17 +12,22 @@ Turbidity data is freely available at https://oceandata.sci.gsfc.nasa.gov/MODIS-
 
 ### Scripts 
 "001_Ordinal_regression_models.R"
+
 Runs all models combinations to assess spatial scale that trends relate to pressures. Print model diagnostics and checks model residuals
 
 "002_Global_predictions_risk-MCMC-samples_nonlinear-transform.R"
+
 Uses the 'best' model in  001_Ordinal_regression_models.R script and predicts to the global distribution of seagrass based on pressure data resampled at 100km resolution. 
 
 "003_SensitivityAnalysis.R"
-Tests different combinations of rates used to classify trajectorie
+
+Tests different combinations of rates used to classify trajectories. Also checks results from a model that excludes sites with only 2 observations. 
 
 "004_Figures.R"
-All code to recreate most figures
+
+Code to recreate most figures
 
 "005_other-summary-stats.R"
+
 Calculate frequency of trajectories per bioregion 
 
