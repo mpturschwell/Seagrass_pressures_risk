@@ -123,3 +123,81 @@ for(i in 1:5){
 }
 
 # we then used Adobe to further customise and clean plots 
+
+#--------------------------------------------------------------------------------#
+# FIGURE S3 - sensitivity figure checking parameters with only GAM data (>2 obs)
+#--------------------------------------------------------------------------------#
+rm(list=ls())
+mytime <- format(Sys.time(), "%Y-%m-%d")
+load(file = "Data/brms_model_GAMdata.rda")
+probs <- p_direction(
+  dist_mod_100k_noSLR_DH,
+  effects = c("all"),
+  component = c("all"),
+  parameters = NULL,
+  method = "direct")
+
+addtoplot <- data.frame(probs$pd[5:15])
+
+par_plot <- mcmc_plot(dist_mod_100k_noSLR_DH, pars = c("_100k$", "_disc_"))+
+  theme_fivethirtyeight() +
+  theme(axis.text.y = element_text(hjust = 0))+
+  geom_vline(xintercept = 0, col = 'black', linetype = "dashed")+
+  theme_bw()+
+  xlim(-5,5)+
+  xlab("Parameter estimate")
+par_plot
+
+plotme <- par_plot$data
+plotme <- cbind(plotme, addtoplot)
+colnames(plotme)[10] <- c("Probability")
+plotme$Probability <- sprintf("%.2f", plotme$Probability)
+levels(plotme$parameter) <- c("Destructive demersal fishing",
+                              "Nutrient pollution",          
+                              "Ocean acidification",         
+                              "Organic chemical pollution",  
+                              "Shipping",                    
+                              "Extreme sea surface temperature events",
+                              "Turbidity (mean)", 
+                              "Turbidity (CV)",
+                              "Opportunistic", 
+                              "Mixed",
+                              "Persistent")
+fS3a <- plotme[1:8,] %>%
+  arrange(desc(m)) %>%    
+  mutate(parameter=factor(parameter, levels=parameter)) %>%   #
+  ggplot(aes(x=m, y=parameter)) +
+  geom_pointrange(aes(xmin = ll, xmax = hh), color='grey27', shape=21, fatten = 2, size = 0.5) +
+  geom_pointrange(aes(xmin = l, xmax = h), fill='dodgerblue1', color='grey52', shape=21, fatten = 2, size = 2) +
+  geom_point(size=3, color="dodgerblue1") +
+  theme_bw() +
+  xlab("")+
+  ylab("")+
+  ggtitle("Pressures")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  xlim(-5,5)+
+  geom_text(aes(x = 4, label = Probability))+
+  geom_vline(aes(xintercept=0), linetype = 'dotted')
+fS3a
+
+fS3b <- plotme[9:11,] %>%
+  arrange(desc(m)) %>%    
+  mutate(parameter=factor(parameter, levels=parameter)) %>%   
+  ggplot(aes(x=m, y=parameter)) +
+  geom_pointrange(aes(xmin = ll, xmax = hh), color='grey27', shape=21, fatten = 2, size = 0.5) +
+  geom_pointrange(aes(xmin = l, xmax = h), fill='blue', color='grey52', shape=21, fatten = 2, size = 2) +
+  geom_point(size=3, color="dodgerblue1") +
+  theme_bw() +
+  xlab("Parameter estimate")+
+  ylab("")+
+  ggtitle("Life history")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  xlim(-5,5)+
+  geom_text(aes(x = 4, label = Probability))+
+  geom_vline(aes(xintercept=0), linetype = 'dotted')+
+  coord_fixed(ratio = 1.3)
+fS3b
+fS3 <- fS3a/fS3b +  plot_annotation(tag_levels = 'A')
+fS3
+ggsave(path = "Figures/", filename = paste0(mytime,"_Figure_S3-GAM-only-parameter-plot.png"), 
+       fS3, width = 8, height = 8, units = c("in"), dpi = 500)
