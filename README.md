@@ -1,5 +1,5 @@
 ## Anthropogenic pressures and life-history predict trajectories of seagrass meadow extent at a global scale
-doi: 
+doi: https://www.pnas.org/doi/abs/10.1073/pnas.2110802118 
 
 Authors: Mischa P. Turschwell, Rod M. Connolly, Jillian C. Dunic, Michael Sievers, Christina A. Buelow, Ryan M. Pearson, Vivitskaia J. D. Tulloch, Isabelle M. Côté, Richard K. F. Unsworth, Catherine J. Collier, & Christopher J. Brown
 
